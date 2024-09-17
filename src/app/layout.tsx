@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { ReactNode } from "react";
-import SessionProviderWrapper from "./SessionProviderWrapper";
 import { CssBaseline } from "@mui/material";
 
 const geistSans = localFont({
@@ -26,10 +25,8 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
     <html lang="en">
       <body>
-        <SessionProviderWrapper>
           <CssBaseline />
           {children}
-        </SessionProviderWrapper>
       </body>
     </html>
   );

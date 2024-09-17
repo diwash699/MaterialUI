@@ -13,8 +13,13 @@
 // import Tooltip from '@mui/material/Tooltip';
 // import MenuItem from '@mui/material/MenuItem';
 // import AdbIcon from '@mui/icons-material/Adb';
+// import Link from 'next/link'; // Import Link from next/link
 
-// const pages = ['Products', 'Pricing', 'Blog'];
+// const pages = [
+//   { name: 'Products', path: '/product' },
+//   { name: 'Pricing', path: '/pricing' },
+//   { name: 'Blog', path: '/blog' }
+// ];
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 // function ResponsiveAppBar() {
@@ -87,8 +92,10 @@
 //               sx={{ display: { xs: 'block', md: 'none' } }}
 //             >
 //               {pages.map((page) => (
-//                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-//                   <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
+//                 <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+//                   <Link href={page.path} passHref>
+//                     <Typography sx={{ textAlign: 'center' }}>{page.name}</Typography>
+//                   </Link>
 //                 </MenuItem>
 //               ))}
 //             </Menu>
@@ -115,12 +122,13 @@
 //           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 //             {pages.map((page) => (
 //               <Button
-//                 href='https://github.com/muhimasri'
-//                 key={page}
-//                 onClick={handleCloseNavMenu}
+//                 key={page.name}
+//                 onClick={() => handleCloseNavMenu()}
 //                 sx={{ my: 2, color: 'white', display: 'block' }}
 //               >
-//                 {page}
+//                 <Link href={page.path} passHref>
+//                   {page.name}
+//                 </Link>
 //               </Button>
 //             ))}
 //           </Box>
@@ -183,7 +191,9 @@ const pages = [
   { name: 'Pricing', path: '/pricing' },
   { name: 'Blog', path: '/blog' }
 ];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Account', 'Logout'];
+
+const drawerWidth = 240; // Width of the drawer
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -205,7 +215,15 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static">
+    // Adjust AppBar to respect the drawer width
+    <AppBar
+      position="fixed"
+      sx={{
+        zIndex: (theme) => theme.zIndex.drawer + 1,
+        // width: `calc(100% - ${drawerWidth}px)`, // Leave space for the drawer
+        // ml: `${drawerWidth}px`, // Shift the AppBar to the right by the width of the drawer
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -213,7 +231,7 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="#"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -224,7 +242,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            DataSoft
+            Shop
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -263,12 +281,12 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+
           <Typography
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="#"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -280,13 +298,14 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            DataSoft
+            Shop
           </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page.name}
-                onClick={() => handleCloseNavMenu()}
+                onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 <Link href={page.path} passHref>
@@ -295,6 +314,7 @@ function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
+
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -330,3 +350,4 @@ function ResponsiveAppBar() {
   );
 }
 export default ResponsiveAppBar;
+
